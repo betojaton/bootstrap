@@ -1,4 +1,3 @@
-// stylelint-disable selector-max-universal
 //
 // Basic Bootstrap table
 //
@@ -20,8 +19,12 @@
   vertical-align: $table-cell-vertical-align;
   border-color: $table-border-color;
 
-  // th & td
-  > * > * > * {
+  // Target th & td
+  // We need the child combinator to prevent styles leaking to nested tables which doesn't have a `.table` class.
+  // We use the universal selectors here to simplify the selector (else we would need 6 different selectors).
+  // Another advantage is that this generates less code and makes the selector less specific making it easier to override.
+  // stylelint-disable-next-line selector-max-universal
+  > :not(caption) > * > * {
     padding: var(--table-cell-padding);
     background-color: var(--table-bg);
     border-width: var(--table-border-width) var(--table-border-width) var(--table-border-bottom-width);
@@ -35,6 +38,7 @@
     vertical-align: bottom;
   }
 
+  // Change border width between thead, tbody and tfoot.
   > :not(caption) + * {
     border-top-width: var(--table-children-border-width);
   }
@@ -45,7 +49,9 @@
 // Change placement of captions with a class
 //
 
-.caption-top { caption-side: top; }
+.caption-top {
+  caption-side: top;
+}
 
 
 //
